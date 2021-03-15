@@ -1,0 +1,33 @@
+########################################################
+# Dockerfile to build deconstructSigs for hg38
+# Based on the base image of Ubuntu with r-bases:3.5.2
+########################################################
+
+FROM r-base:3.5.2
+
+# Install dependencies
+RUN apt-get update --fix-missing\
+    && apt-get install -y gcc-8-base make libfontconfig1-dev libgit2-dev libcurl4-openssl-dev libssl-dev libghc-zlib-dev libexpat1-dev gettext unzip\
+    && apt-get install -y libxml2-dev \
+    && apt-get install -y \
+    git
+
+
+# Install BSgenome, BSgenome.Mmusculus.UCSC.hg38 and deconstructSigs
+
+WORKDIR /usr/local/
+RUN git clone https://github.com/luolingqi/deconstructSigs.hg38.git
+
+# install R packages
+RUN R -e "install.packages('devtools', dependencies=TRUE)"
+RUN R -e "source('https://bioconductor.org/biocLite.R');biocLite('BSgenome');biocLite('BSgenome.Hsapiens.UCSC.hg38')"
+RUN R -e "source('https://bioconductor.org/biocLite.R');biocLite('BSgenome.Hsapiens.UCSC.hg19')"
+RUN R -e "library(devtools);install('/usr/local/deconstructSigs.hg38')"
+RUN R -e "install.packages('RColorBrewer', dependencies=TRUE)"
+RUN R -e "if (!requireNamespace('BiocManager', quietly = TRUE)) {install.packages('BiocManager')}"
+RUN R -e "BiocManager::install('VariantAnnotation', update = T, ask = F)"
+
+#RUN R CMD BATCH install.deconstruct.R
+
+# Cleanup
+RUN apt-get clean
