@@ -11,3 +11,20 @@ RUN install2.r --error \
 RUN install2.r --error \
     RColorBrewer
 
+RUN install2.r --error \
+    table1 \
+    ggpubr \
+    ggsci \
+    jtools \
+    scales \
+    lmerTest \
+    lme4 \
+    sjPlot \
+    survminer \
+    survival \
+    sjlabelled \
+    sjmisc \
+    reshape2 \
+    hrbrthemes \
+    viridis
+    
