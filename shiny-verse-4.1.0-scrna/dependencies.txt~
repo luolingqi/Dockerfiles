@@ -1,0 +1,14 @@
+bash dependencies:
+libglpk-dev - apt-get install libglpk-dev
+
+R packages:
+blusters - BiocManager::install("bluster")
+matrixstats - remotes::install_github("HenrikBengtsson/matrixStats", ref="develop")
+BiocManager::install("shinythemes")
+BiocManager::install("shinyjs")
+BiocManager::install('shinydashboard')
+BiocManager::install("DropletUtils")
+
+install.packages("Seurat")
+BiocManager::install('pheatmap')
+BiocManager::install('DT')

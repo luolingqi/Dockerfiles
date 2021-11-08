@@ -16,4 +16,6 @@ RUN R -e "remotes::install_github('HenrikBengtsson/matrixStats', ref='develop')"
 RUN R -e "BiocManager::install(version='3.14', ask=F)"
 RUN R -e "BiocManager::install('GeomxTools', ask=F)"
 
+COPY shiny-server.sh /usr/bin
+COPY shiny-server.conf /etc/shiny-server
 
